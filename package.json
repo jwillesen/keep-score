@@ -19,7 +19,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:check": "tsc --noEmit",
     "test": "react-scripts test",
+    "test:nowatch": "test --watchAll=false",
+    "lint": "eslint src",
+    "checks": "yarn lint && yarn build:check && yarn test:nowatch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -27,6 +31,10 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "prettier": {
+    "semi": false,
+    "arrowParens": "avoid"
   },
   "browserslist": {
     "production": [
@@ -39,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1"
   }
 }
