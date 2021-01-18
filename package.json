@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "build:check": "tsc --noEmit",
     "test": "react-scripts test",
-    "test:nowatch": "test --watchAll=false",
+    "test:nowatch": "yarn test --watchAll=false",
     "lint": "eslint src",
     "checks": "yarn lint && yarn build:check && yarn test:nowatch",
     "eject": "react-scripts eject"

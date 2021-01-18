@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro"
-
+import React from "react"
 import { store, Player } from "../pullstate"
 import Icon from "./icon"
 import SrOnly from "./sr-only"
@@ -64,7 +64,7 @@ export default function PlayersTable() {
 
   function playerRow(player: Player) {
     return (
-      <>
+      <React.Fragment key={player.name}>
         {activePlayer(player)}
         <div css={nameStyles} onClick={() => playerClicked(player)}>
           {player.name}
@@ -72,7 +72,7 @@ export default function PlayersTable() {
         <div css={scoreStyles} onClick={() => playerClicked(player)}>
           {player.score}
         </div>
-      </>
+      </React.Fragment>
     )
   }
 
