@@ -6,13 +6,11 @@ import Icon from "./icon"
 import SrOnly from "./sr-only"
 
 const gridStyles = css`
-  margin: 20px;
   border: 1px solid black;
   border-radius: 8px;
   padding: 20px;
   display: grid;
   gap: 0.2em;
-  font-size: 2rem;
   grid-template-columns: 1.2em 1fr minmax(1.2em, auto);
   grid-auto-rows: 1em;
   align-items: center;

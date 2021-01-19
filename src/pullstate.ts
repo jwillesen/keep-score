@@ -6,11 +6,19 @@ export interface Player {
   active: boolean
 }
 
+export enum Mode {
+  SCORE = "score",
+  ADD_PLAYER = "add-player",
+  SETTINGS = "settings",
+}
+
 export interface State {
   players: Player[]
+  mode: Mode
 }
 
 const initialState: State = {
+  mode: Mode.SCORE,
   players: [
     { name: "Amanda", score: 42, active: false },
     { name: "Beth", score: 8, active: true },
