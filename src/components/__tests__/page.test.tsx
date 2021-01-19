@@ -45,6 +45,14 @@ describe("Keep Score", () => {
 
   describe("action bar", () => {
     describe("adding a player", () => {
+      it("initially sets the focus to the input", () => {
+        render(<Page />)
+        userEvent.click(screen.getByText(/add player/i))
+        expect(document.activeElement).toBe(
+          screen.getByLabelText(/player name/i)
+        )
+      })
+
       it("adds a new player below the active player", () => {
         render(<Page />)
         userEvent.click(screen.getByText(/add player/i))
@@ -81,14 +89,52 @@ describe("Keep Score", () => {
       })
     })
 
-    // describe("removing a player", () => {
-    //   render(<Page />)
-    //   userEvent.click(screen.getByText(/remove active player/i))
-    //   expect(store.getRawState().players.map(p => p.name)).toEqual([
-    //     "Amanda",
-    //     "Céline",
-    //     "Diane",
-    //   ])
-    // })
+    describe("removing a player", () => {
+      it("removes the active player", () => {
+        render(<Page />)
+        userEvent.click(screen.getByText(/remove active player/i))
+        expect(store.getRawState().players.map(p => p.name)).toEqual([
+          "Amanda",
+          "Céline",
+          "Diane",
+        ])
+      })
+
+      it("does nothing if there are no players", () => {
+        store.update(s => {
+          s.players = []
+        })
+        render(<Page />)
+        expect(() =>
+          userEvent.click(screen.getByText(/remove active player/i))
+        ).not.toThrow()
+      })
+
+      it("makes the next player the active player if there is one", () => {
+        render(<Page />)
+        userEvent.click(screen.getByText(/remove active player/i))
+        expect(store.getRawState().players[1].active).toBeTruthy()
+      })
+
+      it("makes the previous player the active player if removing the last one", () => {
+        store.update(s => {
+          s.players[1].active = false
+          s.players[3].active = true
+        })
+        render(<Page />)
+        userEvent.click(screen.getByText(/remove active player/i))
+        expect(store.getRawState().players[2].active).toBeTruthy()
+      })
+
+      it("can delete the last player", () => {
+        store.update(s => {
+          s.players.splice(0, 3)
+          s.players[0].active = true
+        })
+        render(<Page />)
+        userEvent.click(screen.getByText(/remove active player/i))
+        expect(store.getRawState().players).toHaveLength(0)
+      })
+    })
   })
 })

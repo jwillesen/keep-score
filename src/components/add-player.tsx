@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { store, Mode, Player } from "../pullstate"
 
 export default function AddPlayer() {
@@ -17,6 +17,10 @@ export default function AddPlayer() {
       s.mode = Mode.SCORE
     })
   }
+
+  useEffect(() => {
+    input.current?.focus()
+  }, [])
 
   return (
     <div>

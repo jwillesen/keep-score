@@ -18,15 +18,18 @@ const actionButtonStyles = css`
 `
 
 export default function ActionBar() {
-  // const players = store.useState(s => s.players)
+  const players = store.useState(s => s.players)
 
-  // function removePlayer() {
-  //   const doomedIndex = players.findIndex(p => p.active)
-  //   if (doomedIndex < 0) return
-  //   store.update(s => {
-  //     s.players.splice(doomedIndex, 1)
-  //   })
-  // }
+  function removePlayer() {
+    let doomedIndex = players.findIndex(p => p.active)
+    if (doomedIndex < 0) return
+    store.update(s => {
+      s.players.splice(doomedIndex, 1)
+      if (doomedIndex === s.players.length) doomedIndex -= 1
+      if (doomedIndex < 0) return
+      s.players[doomedIndex].active = true
+    })
+  }
 
   return (
     <div css={actionWrapperStyles}>
@@ -42,7 +45,7 @@ export default function ActionBar() {
         <Icon name="plus" />
         <SrOnly>Add Player</SrOnly>
       </button>
-      <button type="button" css={actionButtonStyles}>
+      <button type="button" css={actionButtonStyles} onClick={removePlayer}>
         <Icon name="minus" />
         <SrOnly>Remove Active Player</SrOnly>
       </button>
