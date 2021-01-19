@@ -1,6 +1,24 @@
 /** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react/macro"
 import { useEffect, useRef } from "react"
 import { store, Mode, Player } from "../pullstate"
+
+const inputStyles = css`
+  display: block;
+  font-size: 2rem;
+  border: 1px solid black;
+  border-radius: 8px;
+  margin-top: 8px;
+`
+
+const buttonStyles = css`
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 500px; /* sufficiently large for a pill shape */
+  font-size: 1em;
+  margin: 8px 0 0 8px;
+  padding: 12px;
+`
 
 export default function AddPlayer() {
   const players = store.useState(s => s.players)
@@ -20,27 +38,36 @@ export default function AddPlayer() {
 
   useEffect(() => {
     input.current?.focus()
+    input.current?.click()
   }, [])
 
   return (
     <div>
       <label>
         Player Name:
-        <input ref={input} type="text" />
+        <input css={inputStyles} ref={input} type="text" />
       </label>
-      <button
-        type="button"
-        onClick={() =>
-          store.update(s => {
-            s.mode = Mode.SCORE
-          })
-        }
+      <div
+        css={css`
+          display: flex;
+          justify-content: flex-end;
+        `}
       >
-        Cancel
-      </button>
-      <button type="button" onClick={addPlayer}>
-        Add Player
-      </button>
+        <button
+          type="button"
+          css={buttonStyles}
+          onClick={() =>
+            store.update(s => {
+              s.mode = Mode.SCORE
+            })
+          }
+        >
+          Cancel
+        </button>
+        <button type="button" css={buttonStyles} onClick={addPlayer}>
+          Add Player
+        </button>
+      </div>
     </div>
   )
 }

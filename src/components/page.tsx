@@ -7,7 +7,7 @@ import PlayersTable from "./players-table"
 import ActionBar from "./action-bar"
 import AddPlayer from "./add-player"
 
-const scoreStyles = css`
+const pageStyles = css`
   padding: 15px;
   font-size: 2rem;
 `
@@ -18,7 +18,7 @@ export default function Page() {
   function renderScore() {
     if (mode === Mode.SCORE) {
       return (
-        <div css={scoreStyles}>
+        <>
           <h1
             css={css`
               margin: 0;
@@ -31,7 +31,7 @@ export default function Page() {
           </h1>
           <PlayersTable />
           <ActionBar />
-        </div>
+        </>
       )
     }
   }
@@ -41,9 +41,9 @@ export default function Page() {
   }
 
   return (
-    <>
+    <div css={pageStyles}>
       {renderScore()}
       {renderAddPlayer()}
-    </>
+    </div>
   )
 }
