@@ -136,5 +136,74 @@ describe("Keep Score", () => {
         expect(store.getRawState().players).toHaveLength(0)
       })
     })
+
+    describe("moving players", () => {
+      it("can move the active player up", () => {
+        render(<Page />)
+        userEvent.click(screen.getByText(/move.*up/i))
+        expect(store.getRawState().players.map(p => p.name)).toEqual([
+          "Beth",
+          "Amanda",
+          "Céline",
+          "Diane",
+        ])
+        expect(store.getRawState().players[0].active).toBeTruthy()
+      })
+
+      it("moving up does nothing if the active player is at the top", () => {
+        store.update(s => {
+          s.players[1].active = false
+          s.players[0].active = true
+        })
+        render(<Page />)
+        userEvent.click(screen.getByText(/move.*up/i))
+        expect(store.getRawState().players.map(p => p.name)).toEqual([
+          "Amanda",
+          "Beth",
+          "Céline",
+          "Diane",
+        ])
+      })
+
+      it("can move the active player down", () => {
+        render(<Page />)
+        userEvent.click(screen.getByText(/move.*down/i))
+        expect(store.getRawState().players.map(p => p.name)).toEqual([
+          "Amanda",
+          "Céline",
+          "Beth",
+          "Diane",
+        ])
+        expect(store.getRawState().players[2].active).toBeTruthy()
+      })
+
+      it("moving down does nothing if the active player is at the bottom", () => {
+        store.update(s => {
+          s.players[1].active = false
+          s.players[3].active = true
+        })
+        render(<Page />)
+        userEvent.click(screen.getByText(/move.*down/i))
+        expect(store.getRawState().players.map(p => p.name)).toEqual([
+          "Amanda",
+          "Beth",
+          "Céline",
+          "Diane",
+        ])
+      })
+
+      it("does nothing if there are no players", () => {
+        store.update(s => {
+          s.players = []
+        })
+        render(<Page />)
+        expect(() =>
+          userEvent.click(screen.getByText(/move.*up/i))
+        ).not.toThrow()
+        expect(() =>
+          userEvent.click(screen.getByText(/move.*down/i))
+        ).not.toThrow()
+      })
+    })
   })
 })

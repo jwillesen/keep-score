@@ -20,14 +20,38 @@ const actionButtonStyles = css`
 export default function ActionBar() {
   const players = store.useState(s => s.players)
 
+  function findActivePlayerIndex() {
+    return players.findIndex(p => p.active)
+  }
+
   function removePlayer() {
-    let doomedIndex = players.findIndex(p => p.active)
+    let doomedIndex = findActivePlayerIndex()
     if (doomedIndex < 0) return
     store.update(s => {
       s.players.splice(doomedIndex, 1)
       if (doomedIndex === s.players.length) doomedIndex -= 1
       if (doomedIndex < 0) return
       s.players[doomedIndex].active = true
+    })
+  }
+
+  function moveUp() {
+    let upIndex = findActivePlayerIndex()
+    if (upIndex <= 0) return
+    const upPlayer = players[upIndex]
+    store.update(s => {
+      s.players.splice(upIndex, 1)
+      s.players.splice(upIndex - 1, 0, upPlayer)
+    })
+  }
+
+  function moveDown() {
+    let downIndex = findActivePlayerIndex()
+    if (downIndex < 0 || downIndex >= players.length) return
+    const downPlayer = players[downIndex]
+    store.update(s => {
+      s.players.splice(downIndex, 1)
+      s.players.splice(downIndex + 1, 0, downPlayer)
     })
   }
 
@@ -49,11 +73,11 @@ export default function ActionBar() {
         <Icon name="minus" />
         <SrOnly>Remove Active Player</SrOnly>
       </button>
-      <button type="button" css={actionButtonStyles}>
+      <button type="button" css={actionButtonStyles} onClick={moveUp}>
         <Icon name="arrow-up" />
         <SrOnly>Move active player up</SrOnly>
       </button>
-      <button type="button" css={actionButtonStyles}>
+      <button type="button" css={actionButtonStyles} onClick={moveDown}>
         <Icon name="arrow-down" />
         <SrOnly>Move active player down</SrOnly>
       </button>
