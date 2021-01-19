@@ -44,7 +44,7 @@ describe("Keep Score", () => {
   })
 
   describe("action bar", () => {
-    describe("modifying scores", () => {
+    describe("adding players", () => {
       it("initially sets the focus to the input", () => {
         render(<Page />)
         userEvent.click(screen.getByText(/add player/i))
@@ -203,6 +203,16 @@ describe("Keep Score", () => {
         expect(() =>
           userEvent.click(screen.getByText(/move.*down/i))
         ).not.toThrow()
+      })
+    })
+
+    describe("reset scores", () => {
+      it("sets all player scores to 0", () => {
+        render(<Page />)
+        userEvent.click(screen.getByText(/reset scores/i))
+        expect(
+          store.getRawState().players.every(p => p.score === 0)
+        ).toBeTruthy()
       })
     })
   })

@@ -52,6 +52,12 @@ export default function ActionBar() {
     })
   }
 
+  function resetScores() {
+    store.update(s => {
+      s.players.forEach(p => (p.score = 0))
+    })
+  }
+
   return (
     <div css={actionWrapperStyles}>
       <button
@@ -77,6 +83,10 @@ export default function ActionBar() {
       <button type="button" css={actionButtonStyles} onClick={moveDown}>
         <Icon name="arrow-down" />
         <SrOnly>Move active player down</SrOnly>
+      </button>
+      <button type="button" css={actionButtonStyles} onClick={resetScores}>
+        <Icon name="arrow-left-rotate" />
+        <SrOnly>Reset scores to 0</SrOnly>
       </button>
       <button type="button" css={actionButtonStyles}>
         <Icon name="gear" />
