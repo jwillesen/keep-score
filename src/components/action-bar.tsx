@@ -3,6 +3,7 @@ import { css } from "@emotion/react/macro"
 import { Mode, store } from "../pullstate"
 import Icon from "./icon"
 import SrOnly from "./sr-only"
+import { findActivePlayerIndex } from "../utils"
 
 const actionWrapperStyles = css`
   display: flex;
@@ -20,12 +21,8 @@ const actionButtonStyles = css`
 export default function ActionBar() {
   const players = store.useState(s => s.players)
 
-  function findActivePlayerIndex() {
-    return players.findIndex(p => p.active)
-  }
-
   function removePlayer() {
-    let doomedIndex = findActivePlayerIndex()
+    let doomedIndex = findActivePlayerIndex(players)
     if (doomedIndex < 0) return
     store.update(s => {
       s.players.splice(doomedIndex, 1)
@@ -36,7 +33,7 @@ export default function ActionBar() {
   }
 
   function moveUp() {
-    let upIndex = findActivePlayerIndex()
+    let upIndex = findActivePlayerIndex(players)
     if (upIndex <= 0) return
     const upPlayer = players[upIndex]
     store.update(s => {
@@ -46,7 +43,7 @@ export default function ActionBar() {
   }
 
   function moveDown() {
-    let downIndex = findActivePlayerIndex()
+    let downIndex = findActivePlayerIndex(players)
     if (downIndex < 0 || downIndex >= players.length) return
     const downPlayer = players[downIndex]
     store.update(s => {

@@ -5,6 +5,7 @@ import { css } from "@emotion/react/macro"
 import { store, Mode } from "../pullstate"
 import PlayersTable from "./players-table"
 import ActionBar from "./action-bar"
+import ScoreGrid from "./score-grid"
 import AddPlayer from "./add-player"
 
 const pageStyles = css`
@@ -31,6 +32,7 @@ export default function Page() {
           </h1>
           <PlayersTable />
           <ActionBar />
+          <ScoreGrid />
         </>
       )
     }

@@ -44,7 +44,7 @@ describe("Keep Score", () => {
   })
 
   describe("action bar", () => {
-    describe("adding a player", () => {
+    describe("modifying scores", () => {
       it("initially sets the focus to the input", () => {
         render(<Page />)
         userEvent.click(screen.getByText(/add player/i))
@@ -204,6 +204,30 @@ describe("Keep Score", () => {
           userEvent.click(screen.getByText(/move.*down/i))
         ).not.toThrow()
       })
+    })
+  })
+
+  describe("adding scores", () => {
+    it("adds to active player's score", () => {
+      render(<Page />)
+      userEvent.click(screen.getByText("+1"))
+      expect(screen.getByText("9")).toBeInTheDocument()
+      expect(store.getRawState().players[1].score).toBe(9)
+    })
+
+    it("subtracts from the active player's score", () => {
+      render(<Page />)
+      userEvent.click(screen.getByText("-3"))
+      expect(screen.getByText("5")).toBeInTheDocument()
+      expect(store.getRawState().players[1].score).toBe(5)
+    })
+
+    it("does nothing if there are no players", () => {
+      store.update(s => {
+        s.players = []
+      })
+      render(<Page />)
+      expect(() => userEvent.click(screen.getByText("+1"))).not.toThrow()
     })
   })
 })
