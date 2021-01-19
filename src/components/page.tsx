@@ -11,6 +11,7 @@ import AddPlayer from "./add-player"
 const pageStyles = css`
   padding: 15px;
   font-size: 2rem;
+  max-width: 540px;
 `
 
 export default function Page() {
