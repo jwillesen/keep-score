@@ -9,6 +9,9 @@ import ScoreGrid from "./score-grid"
 import AddPlayer from "./add-player"
 
 const pageStyles = css`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 15px;
   font-size: 2rem;
   max-width: 540px;

@@ -6,31 +6,25 @@ import ScoreButton from "./score-button"
 const buttonRowStyles = css`
   display: flex;
   justify-content: space-evenly;
+  padding-top: 16px;
   margin-top: 16px;
+  border-top: 1px solid black;
 `
 
 export default function ScoreGrid() {
   return (
     <>
-      <hr />
       <div css={buttonRowStyles}>
         <ScoreButton scoreModifier={1} />
         <ScoreButton scoreModifier={2} />
-        <ScoreButton scoreModifier={3} />
-      </div>
-      <div css={buttonRowStyles}>
         <ScoreButton scoreModifier={5} />
-        <ScoreButton scoreModifier={10} />
+        <ScoreButton scoreModifier={20} />
       </div>
-      <hr />
       <div css={buttonRowStyles}>
         <ScoreButton scoreModifier={-1} />
         <ScoreButton scoreModifier={-2} />
-        <ScoreButton scoreModifier={-3} />
-      </div>
-      <div css={buttonRowStyles}>
         <ScoreButton scoreModifier={-5} />
-        <ScoreButton scoreModifier={-10} />
+        <ScoreButton scoreModifier={-20} />
       </div>
     </>
   )

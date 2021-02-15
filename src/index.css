@@ -1,6 +1,16 @@
 @import-normalize;
 
-body {
-  margin: 0;
+* {
   box-sizing: border-box;
+}
+
+body {
+  /* part of getting the height right on mobile */
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  margin: 0;
+}
+
+#root {
+  height: 100%
 }

@@ -6,6 +6,8 @@ import Icon from "./icon"
 import SrOnly from "./sr-only"
 
 const gridStyles = css`
+  flex: 1;
+
   border: 1px solid black;
   border-radius: 8px;
   padding: 20px;

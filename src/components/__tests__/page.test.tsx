@@ -227,9 +227,9 @@ describe("Keep Score", () => {
 
     it("subtracts from the active player's score", () => {
       render(<Page />)
-      userEvent.click(screen.getByText("-3"))
-      expect(screen.getByText("5")).toBeInTheDocument()
-      expect(store.getRawState().players[1].score).toBe(5)
+      userEvent.click(screen.getByText("-2"))
+      expect(screen.getByText("6")).toBeInTheDocument()
+      expect(store.getRawState().players[1].score).toBe(6)
     })
 
     it("does nothing if there are no players", () => {
