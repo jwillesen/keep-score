@@ -12,5 +12,10 @@ body {
 }
 
 #root {
-  height: 100%
+  height: 100%;
+  font-family: Roboto;
+
+  /* override weird 1.15 line-height set by normalize.css. Causes weird vertical
+     scrolling with Roboto font */
+  line-height: normal;
 }

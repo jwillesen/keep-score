@@ -32,7 +32,7 @@ export default function AddPlayer() {
       const newPlayer: Player = { name: playerName, score: 0, active: true }
       s.players.forEach(p => (p.active = false))
       s.players.splice(insertionIndex, 0, newPlayer)
-      s.mode = Mode.SCORE
+      s.mode = Mode.Score
     })
   }
 
@@ -58,7 +58,7 @@ export default function AddPlayer() {
           css={buttonStyles}
           onClick={() =>
             store.update(s => {
-              s.mode = Mode.SCORE
+              s.mode = Mode.Score
             })
           }
         >

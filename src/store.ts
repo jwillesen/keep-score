@@ -7,10 +7,11 @@ export interface Player {
 }
 
 export enum Mode {
-  SETUP = "setup",
-  SCORE = "score",
-  ADD_PLAYER = "add-player",
-  SETTINGS = "settings",
+  Setup = "setup",
+  Score = "score",
+  ManagePlayers = "manage-players",
+  AddPlayer = "add-player",
+  Settings = "settings",
 }
 
 export interface State {
@@ -19,7 +20,7 @@ export interface State {
 }
 
 const initialState: State = {
-  mode: Mode.SCORE,
+  mode: Mode.Score,
   players: [
     { name: "Amanda", score: 42, active: false },
     { name: "Beth", score: 8, active: true },

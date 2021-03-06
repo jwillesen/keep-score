@@ -5,7 +5,7 @@ import Page from "../page"
 
 function initialState(): State {
   return {
-    mode: Mode.SCORE,
+    mode: Mode.Score,
     players: [
       { name: "Amanda", score: 42, active: false },
       { name: "Beth", score: 8, active: true },
@@ -18,6 +18,23 @@ function initialState(): State {
 describe("Keep Score", () => {
   beforeEach(() => {
     store.replace(initialState())
+  })
+
+  describe("settings menu", () => {
+    it("changes views", () => {
+      render(<Page />)
+      userEvent.click(screen.getByText("Settings Menu"))
+      userEvent.click(screen.getByText("Manage Players"))
+      expect(screen.getByTestId("manage-players-page")).toBeInTheDocument()
+
+      userEvent.click(screen.getByText("Settings Menu"))
+      userEvent.click(screen.getByText("Settings"))
+      expect(screen.getByTestId("settings-page")).toBeInTheDocument()
+
+      userEvent.click(screen.getByText("Settings Menu"))
+      userEvent.click(screen.getByText("Score Game"))
+      expect(screen.getByTestId("score-page")).toBeInTheDocument()
+    })
   })
 
   describe("player list", () => {

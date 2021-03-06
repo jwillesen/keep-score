@@ -65,7 +65,7 @@ export default function ActionBar() {
         css={actionButtonStyles}
         onClick={() =>
           store.update(s => {
-            s.mode = Mode.ADD_PLAYER
+            s.mode = Mode.AddPlayer
           })
         }
       >

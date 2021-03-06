@@ -3,10 +3,12 @@
 import "@fortawesome/fontawesome-pro/css/all.css"
 import { css } from "@emotion/react/macro"
 import { store, Mode } from "../store"
+import PageHeader from "./page-header"
 import PlayersTable from "./players-table"
 import ActionBar from "./action-bar"
 import ScoreGrid from "./score-grid"
 import AddPlayer from "./add-player"
+import ManagePlayers from "../pages/manage-players"
 
 const pageStyles = css`
   display: flex;
@@ -21,35 +23,37 @@ export default function Page() {
   const mode = store.useState(s => s.mode)
 
   function renderScore() {
-    if (mode === Mode.SCORE) {
+    if (mode === Mode.Score) {
       return (
-        <>
-          <h1
-            css={css`
-              margin: 0;
-              margin-bottom: 10px;
-              font-size: 3rem;
-              text-align: center;
-            `}
-          >
-            Keep Score
-          </h1>
+        <div data-testid="score-page">
           <PlayersTable />
           <ActionBar />
           <ScoreGrid />
-        </>
+        </div>
       )
     }
   }
 
   function renderAddPlayer() {
-    if (mode === Mode.ADD_PLAYER) return <AddPlayer />
+    if (mode === Mode.AddPlayer) return <AddPlayer />
+  }
+
+  function renderManagePlayers() {
+    if (mode === Mode.ManagePlayers) return <ManagePlayers />
+  }
+
+  function renderSettings() {
+    if (mode === Mode.Settings)
+      return <div data-testid="settings-page">Settings</div>
   }
 
   return (
     <div css={pageStyles}>
+      <PageHeader />
       {renderScore()}
       {renderAddPlayer()}
+      {renderManagePlayers()}
+      {renderSettings()}
     </div>
   )
 }

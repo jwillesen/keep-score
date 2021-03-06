@@ -14,7 +14,7 @@ const gridStyles = css`
   display: grid;
   gap: 0.2em;
   grid-template-columns: 1.2em 1fr minmax(1.2em, auto);
-  grid-auto-rows: 1em;
+  grid-auto-rows: min-content;
   align-items: center;
 `
 
