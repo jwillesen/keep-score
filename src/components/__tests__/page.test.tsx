@@ -1,7 +1,6 @@
-import { store, State } from "../../pullstate"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { Mode } from "../../pullstate"
+import { store, State, Mode } from "../../store"
 import Page from "../page"
 
 function initialState(): State {
@@ -18,7 +17,7 @@ function initialState(): State {
 
 describe("Keep Score", () => {
   beforeEach(() => {
-    store.update(s => (s = initialState()))
+    store.replace(initialState())
   })
 
   describe("player list", () => {

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro"
 import { useEffect, useRef } from "react"
-import { store, Mode, Player } from "../pullstate"
+import { store, Mode, Player } from "../store"
 
 const inputStyles = css`
   display: block;

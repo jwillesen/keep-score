@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro"
 import React from "react"
-import { store, Player } from "../pullstate"
+import { store, Player } from "../store"
 import Icon from "./icon"
 import SrOnly from "./sr-only"
 

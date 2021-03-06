@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro"
-import { Mode, store } from "../pullstate"
+import { Mode, store } from "../store"
 import Icon from "./icon"
 import SrOnly from "./sr-only"
 import { findActivePlayerIndex } from "../utils"

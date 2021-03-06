@@ -2,7 +2,7 @@
 
 import "@fortawesome/fontawesome-pro/css/all.css"
 import { css } from "@emotion/react/macro"
-import { store, Mode } from "../pullstate"
+import { store, Mode } from "../store"
 import PlayersTable from "./players-table"
 import ActionBar from "./action-bar"
 import ScoreGrid from "./score-grid"

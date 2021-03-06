@@ -7,6 +7,7 @@ export interface Player {
 }
 
 export enum Mode {
+  SETUP = "setup",
   SCORE = "score",
   ADD_PLAYER = "add-player",
   SETTINGS = "settings",
