@@ -2,8 +2,10 @@
 
 import "@fortawesome/fontawesome-pro/css/all.css"
 import { css } from "@emotion/react/macro"
+import { StylesProvider } from "@material-ui/core/styles"
 import { store, Mode } from "../store"
 import PageHeader from "./page-header"
+import PageFooter from "./page-footer"
 import PlayersTable from "./players-table"
 import ActionBar from "./action-bar"
 import ScoreGrid from "./score-grid"
@@ -17,6 +19,10 @@ const pageStyles = css`
   padding: 15px;
   font-size: 2rem;
   max-width: 540px;
+`
+
+const contentStyles = css`
+  flex: 1;
 `
 
 export default function Page() {
@@ -48,12 +54,16 @@ export default function Page() {
   }
 
   return (
-    <div css={pageStyles}>
-      <PageHeader />
-      {renderScore()}
-      {renderAddPlayer()}
-      {renderManagePlayers()}
-      {renderSettings()}
-    </div>
+    <StylesProvider injectFirst>
+      <div css={pageStyles}>
+        <PageHeader />
+        <div css={contentStyles}>
+          {renderScore()}
+          {renderManagePlayers()}
+          {renderSettings()}
+        </div>
+        <PageFooter />
+      </div>
+    </StylesProvider>
   )
 }
