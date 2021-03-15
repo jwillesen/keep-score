@@ -4,18 +4,17 @@ import React from "react"
 import { store, Player } from "../store"
 import Icon from "./icon"
 import SrOnly from "./sr-only"
+import {
+  playerTableStyles,
+  playerTableGridStyles,
+  playerNameStyles,
+} from "../shared-styles"
 
 const gridStyles = css`
+  ${playerTableStyles};
+  ${playerTableGridStyles};
   flex: 1;
-
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 20px;
-  display: grid;
-  gap: 0.2em;
   grid-template-columns: 1.2em 1fr minmax(1.2em, auto);
-  grid-auto-rows: min-content;
-  align-items: center;
 `
 
 const activeStyles = css`
@@ -27,12 +26,6 @@ const activeStyles = css`
 const emptyActiveStyles = css`
   width: 100%;
   height: 100%;
-`
-
-const nameStyles = css`
-  white-space: nowrap;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
 `
 
 const scoreStyles = css`
@@ -66,7 +59,7 @@ export default function PlayersTable() {
     return (
       <React.Fragment key={player.name}>
         {activePlayer(player)}
-        <div css={nameStyles} onClick={() => playerClicked(player)}>
+        <div css={playerNameStyles} onClick={() => playerClicked(player)}>
           {player.name}
         </div>
         <div css={scoreStyles} onClick={() => playerClicked(player)}>

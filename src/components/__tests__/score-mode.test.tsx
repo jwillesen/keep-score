@@ -1,11 +1,12 @@
 import { render, screen, act } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { store } from "../../store"
+import { Mode, store } from "../../store"
 import Page from "../page"
-import { resetState } from "../test-utils"
+import { restoreState, initialState } from "../test-utils"
 
 describe("Score Mode", () => {
-  beforeEach(resetState)
+  store.replace(initialState({ mode: Mode.Score }))
+  beforeEach(restoreState())
 
   describe("player list", () => {
     it("displays the active player", () => {

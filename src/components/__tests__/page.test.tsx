@@ -2,10 +2,11 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { store } from "../../store"
 import Page from "../page"
-import { resetState } from "../test-utils"
+import { restoreState, initialState } from "../test-utils"
 
 describe("Keep Score", () => {
-  beforeEach(resetState)
+  store.replace(initialState())
+  beforeEach(restoreState())
 
   describe("bottom navigation", () => {
     it("changes views", () => {
