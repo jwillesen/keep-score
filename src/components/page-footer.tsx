@@ -11,11 +11,15 @@ const actionStyles = css`
   --selectedSize: 1.5rem;
 
   font-size: var(--normalSize);
+  // transition copied from Mui so it applies to the icon and not just the label
+  transition: font-size 0.2s, opacity 0.2s;
+  transition-delay: 0.1s;
 
   &.Mui-selected {
     font-size: var(--selectedSize);
   }
 
+  // Have to override these
   .MuiBottomNavigationAction-label {
     font-size: var(--normalSize);
   }

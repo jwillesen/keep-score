@@ -9,7 +9,6 @@ import PageFooter from "./page-footer"
 import PlayersTable from "./players-table"
 import ActionBar from "./action-bar"
 import ScoreGrid from "./score-grid"
-import AddPlayer from "./add-player"
 import ManagePlayers from "../pages/manage-players"
 
 const pageStyles = css`
@@ -38,10 +37,6 @@ export default function Page() {
         </div>
       )
     }
-  }
-
-  function renderAddPlayer() {
-    if (mode === Mode.AddPlayer) return <AddPlayer />
   }
 
   function renderManagePlayers() {

@@ -9,10 +9,9 @@ import MenuItem from "@material-ui/core/MenuItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import SrOnly from "./sr-only"
 import Icon from "../components/icon"
-import { store, Mode } from "../store"
+import { store } from "../store"
 
 export default function PageHeader() {
-  const currentMode = store.useState(s => s.mode)
   const theme = useTheme()
   const [buttonElt, setButtonElt] = useState<HTMLButtonElement | null>(null)
 
@@ -24,23 +23,9 @@ export default function PageHeader() {
     setButtonElt(null)
   }
 
-  const handleManagePlayers = () => {
+  const handleReset = () => {
     store.update(s => {
-      s.mode = Mode.ManagePlayers
-    })
-    handleClose()
-  }
-
-  const handlePlay = () => {
-    store.update(s => {
-      s.mode = Mode.Score
-    })
-    handleClose()
-  }
-
-  const handleSettings = () => {
-    store.update(s => {
-      s.mode = Mode.Settings
+      s.players.forEach(p => (p.score = 0))
     })
     handleClose()
   }
@@ -66,21 +51,25 @@ export default function PageHeader() {
         <IconButton
           color="inherit"
           edge="end"
-          aria-controls="settings-menu"
+          aria-controls="action-menu"
           aria-haspopup
           onClick={handleMenuClick}
         >
-          <SrOnly>Settings Menu</SrOnly>
-          <Icon name="gear" />
+          <SrOnly>Action Menu</SrOnly>
+          <Icon name="ellipsis" />
         </IconButton>
       </div>
       <Menu
-        id="settings-menu"
+        id="action-menu"
         open={buttonElt !== null}
         anchorEl={buttonElt}
         variant="menu"
         onClose={handleClose}
         css={css`
+          .MuiMenuItem-root {
+            font-size: 2rem;
+          }
+
           .MuiMenuItem-root.Mui-selected {
             background-color: ${theme.palette.primary.main};
             color: ${theme.palette.primary.contrastText};
@@ -98,29 +87,11 @@ export default function PageHeader() {
           }
         `}
       >
-        <MenuItem
-          selected={currentMode === Mode.ManagePlayers}
-          onClick={handleManagePlayers}
-        >
+        <MenuItem onClick={handleReset}>
           <ListItemIcon>
-            <Icon name="users" />
+            <Icon name="trash-undo" />
           </ListItemIcon>
-          Manage Players
-        </MenuItem>
-        <MenuItem selected={currentMode === Mode.Score} onClick={handlePlay}>
-          <ListItemIcon>
-            <Icon name="play" />
-          </ListItemIcon>
-          Score Game
-        </MenuItem>
-        <MenuItem
-          selected={currentMode === Mode.Settings}
-          onClick={handleSettings}
-        >
-          <ListItemIcon>
-            <Icon name="gear" />
-          </ListItemIcon>
-          Settings
+          Reset Scores
         </MenuItem>
       </Menu>
     </>

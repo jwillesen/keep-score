@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { store, State, Mode } from "../../store"
 import Page from "../page"
+import { act } from "react-dom/test-utils"
 
 function initialState(): State {
   return {
@@ -20,20 +21,17 @@ describe("Keep Score", () => {
     store.replace(initialState())
   })
 
-  describe("settings menu", () => {
+  describe("bottom navigation", () => {
     it("changes views", () => {
       render(<Page />)
-      userEvent.click(screen.getByText("Settings Menu"))
-      userEvent.click(screen.getByText("Manage Players"))
+      userEvent.click(screen.getByText("Players"))
       expect(screen.getByTestId("manage-players-page")).toBeInTheDocument()
 
-      userEvent.click(screen.getByText("Settings Menu"))
+      userEvent.click(screen.getByText("Score"))
+      expect(screen.getByTestId("score-page")).toBeInTheDocument()
+
       userEvent.click(screen.getByText("Settings"))
       expect(screen.getByTestId("settings-page")).toBeInTheDocument()
-
-      userEvent.click(screen.getByText("Settings Menu"))
-      userEvent.click(screen.getByText("Score Game"))
-      expect(screen.getByTestId("score-page")).toBeInTheDocument()
     })
   })
 
@@ -59,177 +57,58 @@ describe("Keep Score", () => {
     it.todo("sr button for setting the active player")
   })
 
+  describe("action menu", () => {
+    it("resets the scores", () => {
+      render(<Page />)
+      userEvent.click(screen.getByText("Action Menu"))
+      userEvent.click(screen.getByText("Reset Scores"))
+      expect(store.getRawState().players.every(p => p.score === 0)).toBeTruthy()
+    })
+  })
+
   describe("action bar", () => {
-    describe("adding players", () => {
-      it("initially sets the focus to the input", () => {
-        render(<Page />)
-        userEvent.click(screen.getByText(/add player/i))
-        expect(document.activeElement).toBe(
-          screen.getByLabelText(/player name/i)
-        )
-      })
+    function getActivePlayerName() {
+      for (let player of store.getRawState().players) {
+        if (player.active) return player.name
+      }
+    }
 
-      it("adds a new player below the active player", () => {
-        render(<Page />)
-        userEvent.click(screen.getByText(/add player/i))
-        userEvent.type(screen.getByLabelText(/player name/i), "Edith")
-        userEvent.click(screen.getByText(/add player/i))
-        expect(store.getRawState().players).toEqual([
-          { name: "Amanda", score: 42, active: false },
-          { name: "Beth", score: 8, active: false },
-          { name: "Edith", score: 0, active: true },
-          { name: "Céline", score: 0, active: false },
-          { name: "Diane", score: 3, active: false },
-        ])
-        expect(screen.getByText("Keep Score")).toBeInTheDocument()
-      })
-
-      it("can add a new player when there are no players currently", () => {
+    function setActivePlayer(name: string) {
+      act(() => {
         store.update(s => {
-          s.players = []
+          s.players.forEach(p => {
+            p.active = p.name === name
+          })
         })
-        render(<Page />)
-        userEvent.click(screen.getByText(/add player/i))
-        userEvent.type(screen.getByLabelText(/player name/i), "Tina")
-        userEvent.click(screen.getByText(/add player/i))
-        expect(store.getRawState().players).toEqual([
-          { name: "Tina", score: 0, active: true },
-        ])
       })
+    }
 
-      it("can cancel adding a player", () => {
-        render(<Page />)
-        userEvent.click(screen.getByText(/add player/i))
-        userEvent.click(screen.getByText(/cancel/i))
-        expect(screen.getByText("Keep Score")).toBeInTheDocument()
-      })
+    it("moves to the next player", () => {
+      render(<Page />)
+      setActivePlayer("Amanda")
+      userEvent.click(screen.getByText("Next Player"))
+      expect(getActivePlayerName()).toBe("Beth")
     })
 
-    describe("removing a player", () => {
-      it("removes the active player", () => {
-        render(<Page />)
-        userEvent.click(screen.getByText(/remove active player/i))
-        expect(store.getRawState().players.map(p => p.name)).toEqual([
-          "Amanda",
-          "Céline",
-          "Diane",
-        ])
-      })
-
-      it("does nothing if there are no players", () => {
-        store.update(s => {
-          s.players = []
-        })
-        render(<Page />)
-        expect(() =>
-          userEvent.click(screen.getByText(/remove active player/i))
-        ).not.toThrow()
-      })
-
-      it("makes the next player the active player if there is one", () => {
-        render(<Page />)
-        userEvent.click(screen.getByText(/remove active player/i))
-        expect(store.getRawState().players[1].active).toBeTruthy()
-      })
-
-      it("makes the previous player the active player if removing the last one", () => {
-        store.update(s => {
-          s.players[1].active = false
-          s.players[3].active = true
-        })
-        render(<Page />)
-        userEvent.click(screen.getByText(/remove active player/i))
-        expect(store.getRawState().players[2].active).toBeTruthy()
-      })
-
-      it("can delete the last player", () => {
-        store.update(s => {
-          s.players.splice(0, 3)
-          s.players[0].active = true
-        })
-        render(<Page />)
-        userEvent.click(screen.getByText(/remove active player/i))
-        expect(store.getRawState().players).toHaveLength(0)
-      })
+    it("moves to the first player when it needs to wrap", () => {
+      render(<Page />)
+      setActivePlayer("Diane")
+      userEvent.click(screen.getByText("Next Player"))
+      expect(getActivePlayerName()).toBe("Amanda")
     })
 
-    describe("moving players", () => {
-      it("can move the active player up", () => {
-        render(<Page />)
-        userEvent.click(screen.getByText(/move.*up/i))
-        expect(store.getRawState().players.map(p => p.name)).toEqual([
-          "Beth",
-          "Amanda",
-          "Céline",
-          "Diane",
-        ])
-        expect(store.getRawState().players[0].active).toBeTruthy()
-      })
-
-      it("moving up does nothing if the active player is at the top", () => {
-        store.update(s => {
-          s.players[1].active = false
-          s.players[0].active = true
-        })
-        render(<Page />)
-        userEvent.click(screen.getByText(/move.*up/i))
-        expect(store.getRawState().players.map(p => p.name)).toEqual([
-          "Amanda",
-          "Beth",
-          "Céline",
-          "Diane",
-        ])
-      })
-
-      it("can move the active player down", () => {
-        render(<Page />)
-        userEvent.click(screen.getByText(/move.*down/i))
-        expect(store.getRawState().players.map(p => p.name)).toEqual([
-          "Amanda",
-          "Céline",
-          "Beth",
-          "Diane",
-        ])
-        expect(store.getRawState().players[2].active).toBeTruthy()
-      })
-
-      it("moving down does nothing if the active player is at the bottom", () => {
-        store.update(s => {
-          s.players[1].active = false
-          s.players[3].active = true
-        })
-        render(<Page />)
-        userEvent.click(screen.getByText(/move.*down/i))
-        expect(store.getRawState().players.map(p => p.name)).toEqual([
-          "Amanda",
-          "Beth",
-          "Céline",
-          "Diane",
-        ])
-      })
-
-      it("does nothing if there are no players", () => {
-        store.update(s => {
-          s.players = []
-        })
-        render(<Page />)
-        expect(() =>
-          userEvent.click(screen.getByText(/move.*up/i))
-        ).not.toThrow()
-        expect(() =>
-          userEvent.click(screen.getByText(/move.*down/i))
-        ).not.toThrow()
-      })
+    it("moves to the previous player", () => {
+      render(<Page />)
+      setActivePlayer("Beth")
+      userEvent.click(screen.getByText("Previous Player"))
+      expect(getActivePlayerName()).toBe("Amanda")
     })
 
-    describe("reset scores", () => {
-      it("sets all player scores to 0", () => {
-        render(<Page />)
-        userEvent.click(screen.getByText(/reset scores/i))
-        expect(
-          store.getRawState().players.every(p => p.score === 0)
-        ).toBeTruthy()
-      })
+    it("previous player moves to last player when it needs to wrap", () => {
+      render(<Page />)
+      setActivePlayer("Amanda")
+      userEvent.click(screen.getByText("Previous Player"))
+      expect(getActivePlayerName()).toBe("Diane")
     })
   })
 

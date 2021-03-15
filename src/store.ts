@@ -7,10 +7,8 @@ export interface Player {
 }
 
 export enum Mode {
-  Setup = "setup",
-  Score = "score",
   ManagePlayers = "manage-players",
-  AddPlayer = "add-player",
+  Score = "score",
   Settings = "settings",
 }
 
