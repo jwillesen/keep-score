@@ -40,14 +40,14 @@ export default function ActionBar() {
         size="large"
         onClick={handlePreviousPlayer}
       >
-        Previous Player
+        Previous
       </Button>
       <Button
         size="large"
         endIcon={<Icon name="arrow-right" />}
         onClick={handleNextPlayer}
       >
-        Next Player
+        Next
       </Button>
     </div>
   )

@@ -6,6 +6,10 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction"
 import { store, Mode } from "../store"
 import Icon from "./icon"
 
+const navStyles = css`
+  margin-top: 10px;
+`
+
 const actionStyles = css`
   --normalSize: 1.25rem;
   --selectedSize: 1.5rem;
@@ -37,7 +41,12 @@ export default function PageFooter() {
   }
 
   return (
-    <BottomNavigation value={mode} showLabels onChange={handleChange}>
+    <BottomNavigation
+      css={navStyles}
+      value={mode}
+      showLabels
+      onChange={handleChange}
+    >
       <BottomNavigationAction
         css={actionStyles}
         label="Players"
