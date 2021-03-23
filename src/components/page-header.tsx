@@ -5,14 +5,21 @@ import { useTheme } from "@material-ui/core/styles"
 import { css } from "@emotion/react/macro"
 import IconButton from "@material-ui/core/IconButton"
 import Menu from "@material-ui/core/Menu"
-import MenuItem from "@material-ui/core/MenuItem"
-import ListItemIcon from "@material-ui/core/ListItemIcon"
+import { Mode, store } from "../store"
+import renderScoreMenuItems from "../pages/score-page/render-action-menu-items"
+import renderManagePlayersMenuItems from "../pages/manage-players/render-action-menu-items"
 import SrOnly from "./sr-only"
 import Icon from "../components/icon"
-import { store } from "../store"
+
+const menuStyles = css`
+  .MuiMenuItem-root {
+    font-size: 1.5rem;
+  }
+`
 
 export default function PageHeader() {
   const theme = useTheme()
+  const mode = store.useState(s => s.mode)
   const [buttonElt, setButtonElt] = useState<HTMLButtonElement | null>(null)
 
   const handleMenuClick: React.ReactEventHandler<HTMLButtonElement> = e => {
@@ -23,77 +30,59 @@ export default function PageHeader() {
     setButtonElt(null)
   }
 
-  const handleReset = () => {
-    store.update(s => {
-      s.players.forEach(p => (p.score = 0))
-    })
-    handleClose()
+  const renderMenuItems = () => {
+    switch (mode) {
+      case Mode.ManagePlayers:
+        return renderManagePlayersMenuItems({ theme, onAction: handleClose })
+      case Mode.Score:
+        return renderScoreMenuItems({ theme, onAction: handleClose })
+      default:
+        return null
+    }
   }
 
+  const menuItems = renderMenuItems()
   return (
-    <>
-      <div
+    <div
+      css={css`
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      `}
+    >
+      <h1
         css={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 10px;
+          margin: 0;
+          font-size: 3rem;
         `}
       >
-        <h1
-          css={css`
-            margin: 0;
-            font-size: 3rem;
-          `}
-        >
-          Keep Score
-        </h1>
-        <IconButton
-          color="inherit"
-          edge="end"
-          aria-controls="action-menu"
-          aria-haspopup
-          onClick={handleMenuClick}
-        >
-          <SrOnly>Action Menu</SrOnly>
-          <Icon name="ellipsis" />
-        </IconButton>
-      </div>
-      <Menu
-        id="action-menu"
-        open={buttonElt !== null}
-        anchorEl={buttonElt}
-        variant="menu"
-        onClose={handleClose}
-        css={css`
-          .MuiMenuItem-root {
-            font-size: 2rem;
-          }
-
-          .MuiMenuItem-root.Mui-selected {
-            background-color: ${theme.palette.primary.main};
-            color: ${theme.palette.primary.contrastText};
-            & .MuiListItemIcon-root {
-              color: ${theme.palette.primary.contrastText};
-            }
-          }
-          .MuiMenuItem-root:hover,
-          .MuiMenuItem-root.Mui-selected:hover {
-            background-color: ${theme.palette.primary.light};
-            color: ${theme.palette.primary.contrastText};
-            & .MuiListItemIcon-root {
-              color: ${theme.palette.primary.contrastText};
-            }
-          }
-        `}
-      >
-        <MenuItem onClick={handleReset}>
-          <ListItemIcon>
-            <Icon name="trash-undo" />
-          </ListItemIcon>
-          Reset Scores
-        </MenuItem>
-      </Menu>
-    </>
+        Keep Score
+      </h1>
+      {menuItems && (
+        <>
+          <IconButton
+            color="inherit"
+            edge="end"
+            aria-controls="action-menu"
+            aria-haspopup
+            onClick={handleMenuClick}
+          >
+            <SrOnly>Action Menu</SrOnly>
+            <Icon name="ellipsis" />
+          </IconButton>
+          <Menu
+            id="action-menu"
+            open={buttonElt !== null}
+            anchorEl={buttonElt}
+            variant="menu"
+            onClose={handleClose}
+            css={menuStyles}
+          >
+            {menuItems}
+          </Menu>
+        </>
+      )}
+    </div>
   )
 }

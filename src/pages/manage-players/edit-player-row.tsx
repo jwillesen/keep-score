@@ -64,7 +64,7 @@ export default function EditPlayerRow({ index }: Props) {
           color: ${theme.palette.error.main};
         `}
       >
-        <Icon name="trash-can" />
+        <Icon name="user-xmark" />
         <SrOnly>Remove player</SrOnly>
       </IconButton>
     </>

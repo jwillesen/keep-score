@@ -4,6 +4,9 @@ import { Mode, store } from "../store"
 import Page from "../components/page"
 import { restoreState, initialState } from "../test-utils"
 
+import { shuffle } from "../utils"
+jest.mock("../utils")
+
 describe("Manage Players Mode", () => {
   store.replace(initialState({ mode: Mode.ManagePlayers }))
   beforeEach(restoreState())
@@ -66,6 +69,23 @@ describe("Manage Players Mode", () => {
     expect(s.players[s.players.length - 1].name).toBe("Fiona")
   })
 
-  it.todo("can randomize player order")
-  it.todo("can clear all players")
+  it("can randomize player order", () => {
+    ;(shuffle as jest.Mock).mockImplementation(a => a.reverse())
+    render(<Page />)
+    userEvent.click(screen.getByText("Action Menu"))
+    userEvent.click(screen.getByText("Randomize players"))
+    expect(store.getRawState().players.map(p => p.name)).toEqual([
+      "Diane",
+      "Céline",
+      "Beth",
+      "Amanda",
+    ])
+  })
+
+  it("can clear all players", () => {
+    render(<Page />)
+    userEvent.click(screen.getByText("Action Menu"))
+    userEvent.click(screen.getByText("Remove all"))
+    expect(store.getRawState().players).toHaveLength(0)
+  })
 })

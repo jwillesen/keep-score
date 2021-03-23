@@ -17,7 +17,7 @@ export default function AddPlayerForm() {
         s.players.push({
           name: inputRef.current!.value,
           score: 0,
-          active: false,
+          active: s.players.length === 0,
         })
       })
       inputRef.current.value = ""
@@ -35,7 +35,7 @@ export default function AddPlayerForm() {
     return (
       <InputAdornment position="end">
         <IconButton onClick={handleAdd}>
-          <Icon name="plus" />
+          <Icon name="user-plus" />
           <SrOnly>Add player</SrOnly>
         </IconButton>
       </InputAdornment>
