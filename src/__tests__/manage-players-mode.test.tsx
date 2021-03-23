@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { Mode, store } from "../../store"
-import Page from "../page"
+import { Mode, store } from "../store"
+import Page from "../components/page"
 import { restoreState, initialState } from "../test-utils"
 
 describe("Manage Players Mode", () => {

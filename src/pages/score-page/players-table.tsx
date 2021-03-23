@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro"
 import React from "react"
-import { store, Player } from "../store"
-import Icon from "./icon"
-import SrOnly from "./sr-only"
+import { store, Player } from "../../store"
+import Icon from "../../components/icon"
+import SrOnly from "../../components/sr-only"
 import {
   playerTableStyles,
   playerTableGridStyles,
   playerNameStyles,
-} from "../shared-styles"
+} from "../../shared-styles"
 
 const gridStyles = css`
   ${playerTableStyles};

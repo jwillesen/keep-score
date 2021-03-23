@@ -6,10 +6,8 @@ import { StylesProvider } from "@material-ui/core/styles"
 import { store, Mode } from "../store"
 import PageHeader from "./page-header"
 import PageFooter from "./page-footer"
-import PlayersTable from "./players-table"
-import ActionBar from "./action-bar"
-import ScoreGrid from "./score-grid"
 import ManagePlayers from "../pages/manage-players"
+import ScorePage from "../pages/score-page"
 
 const pageStyles = css`
   display: flex;
@@ -28,15 +26,7 @@ export default function Page() {
   const mode = store.useState(s => s.mode)
 
   function renderScore() {
-    if (mode === Mode.Score) {
-      return (
-        <div data-testid="score-page">
-          <PlayersTable />
-          <ActionBar />
-          <ScoreGrid />
-        </div>
-      )
-    }
+    if (mode === Mode.Score) return <ScorePage />
   }
 
   function renderManagePlayers() {

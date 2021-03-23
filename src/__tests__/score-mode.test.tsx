@@ -1,7 +1,7 @@
 import { render, screen, act } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { Mode, store } from "../../store"
-import Page from "../page"
+import { Mode, store } from "../store"
+import Page from "../components/page"
 import { restoreState, initialState } from "../test-utils"
 
 describe("Score Mode", () => {
@@ -50,28 +50,28 @@ describe("Score Mode", () => {
     it("moves to the next player", () => {
       render(<Page />)
       setActivePlayer("Amanda")
-      userEvent.click(screen.getByText("Next Player"))
+      userEvent.click(screen.getByText("Next"))
       expect(getActivePlayerName()).toBe("Beth")
     })
 
     it("moves to the first player when it needs to wrap", () => {
       render(<Page />)
       setActivePlayer("Diane")
-      userEvent.click(screen.getByText("Next Player"))
+      userEvent.click(screen.getByText("Next"))
       expect(getActivePlayerName()).toBe("Amanda")
     })
 
     it("moves to the previous player", () => {
       render(<Page />)
       setActivePlayer("Beth")
-      userEvent.click(screen.getByText("Previous Player"))
+      userEvent.click(screen.getByText("Previous"))
       expect(getActivePlayerName()).toBe("Amanda")
     })
 
     it("previous player moves to last player when it needs to wrap", () => {
       render(<Page />)
       setActivePlayer("Amanda")
-      userEvent.click(screen.getByText("Previous Player"))
+      userEvent.click(screen.getByText("Previous"))
       expect(getActivePlayerName()).toBe("Diane")
     })
   })

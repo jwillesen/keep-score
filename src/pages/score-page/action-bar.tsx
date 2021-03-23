@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro"
 import Button from "@material-ui/core/Button"
-import { store } from "../store"
-import Icon from "./icon"
-import { findActivePlayerIndex } from "../utils"
+import { store } from "../../store"
+import Icon from "../../components/icon"
+import { findActivePlayerIndex } from "../../utils"
 
 const actionWrapperStyles = css`
   display: flex;

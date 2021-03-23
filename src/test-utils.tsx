@@ -1,4 +1,4 @@
-import { store, State, Mode } from "../store"
+import { store, State, Mode } from "./store"
 
 export function restoreState() {
   const currentState = store.getRawState()

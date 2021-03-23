@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from "@emotion/react/macro"
-import { store } from "../store"
-import { findActivePlayerIndex } from "../utils"
+import { store } from "../../store"
+import { findActivePlayerIndex } from "../../utils"
 
 const scoreButtonStyles = css`
   background-color: white;
