@@ -32,7 +32,7 @@ export default function renderScoreMenuItems({ theme, onAction }: Props) {
           color: ${theme.palette.error.main};
         `}
       >
-        <Icon name="xmark" />
+        <Icon name="trash-undo" />
       </ListItemIcon>
       Reset Scores
     </MenuItem>,

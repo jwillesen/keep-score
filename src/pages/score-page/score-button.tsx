@@ -1,17 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from "@emotion/react/macro"
+import Button from "@material-ui/core/Button"
 import { store } from "../../store"
 import { findActivePlayerIndex } from "../../utils"
 
 const scoreButtonStyles = css`
-  background-color: white;
-  border: 2px solid black;
   border-radius: 500px;
-  padding: 8px;
-  font-size: 1.8rem;
-  width: 5rem;
-  height: 5rem;
+  font-size: 1.5rem;
+  width: 4.5rem;
+  height: 4.5rem;
 `
 
 interface Props {
@@ -31,9 +29,14 @@ export default function ScoreButton({ scoreModifier }: Props) {
   }
 
   return (
-    <button type="button" css={scoreButtonStyles} onClick={changeScore}>
+    <Button
+      css={scoreButtonStyles}
+      size="large"
+      variant="outlined"
+      onClick={changeScore}
+    >
       {sign}
       {scoreModifier.toString()}
-    </button>
+    </Button>
   )
 }

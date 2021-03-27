@@ -7,7 +7,7 @@ const buttonRowStyles = css`
   display: flex;
   justify-content: space-evenly;
   padding-top: 16px;
-  margin-top: 16px;
+  margin-bottom: 16px;
   border-top: 1px solid black;
 `
 
