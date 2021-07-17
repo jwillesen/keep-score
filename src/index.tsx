@@ -2,7 +2,10 @@ import React from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
 import Page from "./components/page"
+import persistPlayerState from "./persist-player-state"
 import reportWebVitals from "./reportWebVitals"
+
+persistPlayerState()
 
 ReactDOM.render(
   <React.StrictMode>

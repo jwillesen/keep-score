@@ -17,7 +17,7 @@ export interface State {
   mode: Mode
 }
 
-const initialState: State = {
+export const initialState: State = {
   mode: Mode.Score,
   players: [
     { name: "Amanda", score: 42, active: false },
