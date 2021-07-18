@@ -18,10 +18,6 @@ const pageStyles = css`
   max-width: 540px;
 `
 
-const contentStyles = css`
-  flex: 1;
-`
-
 export default function Page() {
   const mode = store.useState(s => s.mode)
 
@@ -42,11 +38,9 @@ export default function Page() {
     <StylesProvider injectFirst>
       <div css={pageStyles}>
         <PageHeader />
-        <div css={contentStyles}>
-          {renderScore()}
-          {renderManagePlayers()}
-          {renderSettings()}
-        </div>
+        {renderScore()}
+        {renderManagePlayers()}
+        {renderSettings()}
         <PageFooter />
       </div>
     </StylesProvider>

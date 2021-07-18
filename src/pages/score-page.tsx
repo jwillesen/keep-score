@@ -5,9 +5,9 @@ import ActionBar from "./score-page/action-bar"
 import ScoreGrid from "./score-page/score-grid"
 
 const scorePageStyles = css`
-  height: 100%;
   display: flex;
   flex-direction: column;
+  flex: 1 1 0;
 `
 
 export default function ScorePage() {

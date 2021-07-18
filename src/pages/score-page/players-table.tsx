@@ -13,7 +13,6 @@ import {
 const gridStyles = css`
   ${playerTableStyles};
   ${playerTableGridStyles};
-  flex: 1;
   grid-template-columns: 1.2em 1fr minmax(1.2em, auto);
 `
 
@@ -59,7 +58,11 @@ export default function PlayersTable() {
     return (
       <React.Fragment key={player.name}>
         {activePlayer(player)}
-        <div css={playerNameStyles} onClick={() => playerClicked(player)}>
+        <div
+          data-player={player.name}
+          css={playerNameStyles}
+          onClick={() => playerClicked(player)}
+        >
           {player.name}
         </div>
         <div css={scoreStyles} onClick={() => playerClicked(player)}>

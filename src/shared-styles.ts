@@ -4,6 +4,8 @@ export const playerTableStyles = css`
   border: 1px solid black;
   border-radius: 8px;
   padding: 20px;
+  flex: 1 1 0;
+  overflow-y: auto;
 `
 
 export const playerNameStyles = css`

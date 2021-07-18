@@ -9,12 +9,12 @@ const managePageStyles = css`
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex: 1 1 0;
 `
 
 const playerDisplayStyles = css`
   ${playerTableStyles};
   ${playerTableGridStyles};
-  flex: 1;
   grid-template-columns: 1fr auto auto auto;
 `
 

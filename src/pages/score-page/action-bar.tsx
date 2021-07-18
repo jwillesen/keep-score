@@ -13,9 +13,18 @@ const actionWrapperStyles = css`
 export default function ActionBar() {
   const players = store.useState(s => s.players)
 
+  function scrollPlayerIntoView(playerName: string) {
+    const playerElt = document.querySelector(`[data-player="${playerName}"`)
+    playerElt?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    })
+  }
+
   function handleNextPlayer() {
     let nextPlayerIndex = findActivePlayerIndex(players) + 1
     if (nextPlayerIndex >= players.length) nextPlayerIndex = 0
+    scrollPlayerIntoView(players[nextPlayerIndex].name)
     store.update(s => {
       s.players.forEach((player, index) => {
         player.active = index === nextPlayerIndex
@@ -26,6 +35,7 @@ export default function ActionBar() {
   function handlePreviousPlayer() {
     let previousPlayerIndex = findActivePlayerIndex(players) - 1
     if (previousPlayerIndex < 0) previousPlayerIndex = players.length - 1
+    scrollPlayerIntoView(players[previousPlayerIndex].name)
     store.update(s => {
       s.players.forEach((player, index) => {
         player.active = index === previousPlayerIndex
