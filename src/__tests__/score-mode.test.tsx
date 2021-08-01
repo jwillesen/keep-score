@@ -28,6 +28,66 @@ describe("Score Mode", () => {
     })
 
     it.todo("sr button for setting the active player")
+
+    it("displays score modifiers", () => {
+      store.update(s => {
+        s.players[0].scoreModifier = 42
+      })
+      render(<Page />)
+      expect(screen.getByText(/\+42/)).toBeInTheDocument()
+    })
+
+    it("collapses score modifiers when the player is clicked", () => {
+      const modifier = 42
+      store.update(s => {
+        s.players[0].scoreModifier = modifier
+      })
+      render(<Page />)
+      userEvent.click(screen.getByText("Amanda"))
+      expect(store.getRawState().players[0].score).toBe(
+        initialState().players[0].score + modifier
+      )
+      expect(store.getRawState().players[0].scoreModifier).toBe(0)
+    })
+
+    it("collapses score modifiers when any player is clicked", () => {
+      const modifier = 42
+      store.update(s => {
+        s.players[1].scoreModifier = modifier
+      })
+      render(<Page />)
+      userEvent.click(screen.getByText("Diane"))
+      expect(store.getRawState().players[1].score).toBe(
+        initialState().players[1].score + modifier
+      )
+      expect(store.getRawState().players[1].scoreModifier).toBe(0)
+    })
+
+    it("collapses score modifiers when the next button is clicked", () => {
+      const modifier = 42
+      store.update(s => {
+        s.players[0].scoreModifier = modifier
+      })
+      render(<Page />)
+      userEvent.click(screen.getByText("Next"))
+      expect(store.getRawState().players[0].score).toBe(
+        initialState().players[0].score + modifier
+      )
+      expect(store.getRawState().players[0].scoreModifier).toBe(0)
+    })
+
+    it("collapses score modifiers when the previous button is clicked", () => {
+      const modifier = 42
+      store.update(s => {
+        s.players[0].scoreModifier = modifier
+      })
+      render(<Page />)
+      userEvent.click(screen.getByText("Previous"))
+      expect(store.getRawState().players[0].score).toBe(
+        initialState().players[0].score + modifier
+      )
+      expect(store.getRawState().players[0].scoreModifier).toBe(0)
+    })
   })
 
   describe("action bar", () => {
@@ -80,15 +140,17 @@ describe("Score Mode", () => {
     it("adds to active player's score", () => {
       render(<Page />)
       userEvent.click(screen.getByText("+1"))
-      expect(screen.getByText("9")).toBeInTheDocument()
-      expect(store.getRawState().players[1].score).toBe(9)
+      expect(screen.getByText("8 +1")).toBeInTheDocument()
+      expect(store.getRawState().players[1].score).toBe(8)
+      expect(store.getRawState().players[1].scoreModifier).toBe(1)
     })
 
     it("subtracts from the active player's score", () => {
       render(<Page />)
       userEvent.click(screen.getByText("-2"))
-      expect(screen.getByText("6")).toBeInTheDocument()
-      expect(store.getRawState().players[1].score).toBe(6)
+      expect(screen.getByText("8 -2")).toBeInTheDocument()
+      expect(store.getRawState().players[1].score).toBe(8)
+      expect(store.getRawState().players[1].scoreModifier).toBe(-2)
     })
 
     it("does nothing if there are no players", () => {

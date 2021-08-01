@@ -14,7 +14,7 @@ interface Props {
 export default function renderScoreMenuItems({ theme, onAction }: Props) {
   const handleReset = () => {
     store.update(s => {
-      s.players.forEach(p => (p.score = 0))
+      s.players.forEach(p => (p.score = p.scoreModifier = 0))
     })
     onAction()
   }

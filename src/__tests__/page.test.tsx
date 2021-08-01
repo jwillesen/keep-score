@@ -24,10 +24,16 @@ describe("Keep Score", () => {
 
   describe("action menu", () => {
     it("resets the scores", () => {
+      store.update(s => {
+        s.players.forEach((p, i) => (p.scoreModifier = i))
+      })
       render(<Page />)
       userEvent.click(screen.getByText("Action Menu"))
       userEvent.click(screen.getByText("Reset Scores"))
       expect(store.getRawState().players.every(p => p.score === 0)).toBeTruthy()
+      expect(
+        store.getRawState().players.every(p => p.scoreModifier === 0)
+      ).toBeTruthy()
     })
   })
 })

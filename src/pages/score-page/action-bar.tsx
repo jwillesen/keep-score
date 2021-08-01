@@ -28,6 +28,8 @@ export default function ActionBar() {
     store.update(s => {
       s.players.forEach((player, index) => {
         player.active = index === nextPlayerIndex
+        player.score += player.scoreModifier
+        player.scoreModifier = 0
       })
     })
   }
@@ -39,6 +41,8 @@ export default function ActionBar() {
     store.update(s => {
       s.players.forEach((player, index) => {
         player.active = index === previousPlayerIndex
+        player.score += player.scoreModifier
+        player.scoreModifier = 0
       })
     })
   }

@@ -1,5 +1,5 @@
 import persistPlayerState from "../persist-player-state"
-import { store, initialState } from "../store"
+import { store, initialState, Player } from "../store"
 
 describe("persistPlayerState", () => {
   let unsubscribePlayerState: null | (() => void) = null
@@ -20,9 +20,9 @@ describe("persistPlayerState", () => {
   })
 
   it("initializes pullstate with saved state", () => {
-    const storedState = [
-      { name: "Foo", score: 42, active: false },
-      { name: "Bar", score: 21, active: true },
+    const storedState: Player[] = [
+      { name: "Foo", score: 42, scoreModifier: 3, active: false },
+      { name: "Bar", score: 21, scoreModifier: 4, active: true },
     ]
     localStorage.setItem("players", JSON.stringify(storedState))
     persist()

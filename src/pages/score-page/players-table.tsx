@@ -39,11 +39,13 @@ export default function PlayersTable() {
       s.players.forEach(p => {
         if (p.name === player.name) p.active = true
         else p.active = false
+        p.score += p.scoreModifier
+        p.scoreModifier = 0
       })
     })
   }
 
-  function activePlayer(player: Player) {
+  function renderActivePlayer(player: Player) {
     const styles = [activeStyles]
     if (!player.active) styles.push(emptyActiveStyles)
     return (
@@ -54,10 +56,19 @@ export default function PlayersTable() {
     )
   }
 
+  function renderScore(player: Player) {
+    return (
+      <div css={scoreStyles} onClick={() => playerClicked(player)}>
+        {player.score} {player.scoreModifier > 0 ? "+" : ""}
+        {player.scoreModifier === 0 ? null : player.scoreModifier}
+      </div>
+    )
+  }
+
   function playerRow(player: Player) {
     return (
       <React.Fragment key={player.name}>
-        {activePlayer(player)}
+        {renderActivePlayer(player)}
         <div
           data-player={player.name}
           css={playerNameStyles}
@@ -65,9 +76,7 @@ export default function PlayersTable() {
         >
           {player.name}
         </div>
-        <div css={scoreStyles} onClick={() => playerClicked(player)}>
-          {player.score}
-        </div>
+        {renderScore(player)}
       </React.Fragment>
     )
   }

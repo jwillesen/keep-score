@@ -24,7 +24,7 @@ export default function ScoreButton({ scoreModifier }: Props) {
     const activePlayerIndex = findActivePlayerIndex(players)
     if (activePlayerIndex < 0) return
     store.update(s => {
-      s.players[activePlayerIndex].score += scoreModifier
+      s.players[activePlayerIndex].scoreModifier += scoreModifier
     })
   }
 

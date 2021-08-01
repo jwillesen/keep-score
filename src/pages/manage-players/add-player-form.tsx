@@ -17,6 +17,7 @@ export default function AddPlayerForm() {
         s.players.push({
           name: inputRef.current!.value,
           score: 0,
+          scoreModifier: 0,
           active: s.players.length === 0,
         })
       })

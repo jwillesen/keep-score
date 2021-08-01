@@ -6,6 +6,9 @@ export default function persistPlayerState() {
     try {
       store.update(s => {
         s.players = JSON.parse(previouslyStoredPlayersString)
+        s.players.forEach(p => {
+          p.scoreModifier = p.scoreModifier || 0
+        })
       })
     } catch {}
   }
