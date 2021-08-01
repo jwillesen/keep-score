@@ -8,6 +8,7 @@ import PageHeader from "./page-header"
 import PageFooter from "./page-footer"
 import ManagePlayers from "../pages/manage-players"
 import ScorePage from "../pages/score-page"
+import SettingsPage from "../pages/settings-page"
 
 const pageStyles = css`
   display: flex;
@@ -30,8 +31,7 @@ export default function Page() {
   }
 
   function renderSettings() {
-    if (mode === Mode.Settings)
-      return <div data-testid="settings-page">Settings</div>
+    if (mode === Mode.Settings) return <SettingsPage />
   }
 
   return (
